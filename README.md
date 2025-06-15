@@ -1,106 +1,61 @@
-# AI Hotel Booking Agent
+# AI Agent for Hotel Bookings (LangGraph & Gemini)
 
-This project is an AI-powered agent that assists users with hotel room bookings, rescheduling, and answering hotel-related questions via Instagram DMs. It's built using LangGraph, LangChain, and Google's Gemini LLM to manage conversational flows and maintain context.
+We're growing our tech team at Powersmy.biz ([https://powersmy.biz/](https://powersmy.biz/)) and have an exciting paid internship opportunity for students who love solving real-world problems and building impactful products. If you're passionate about conversational AI and ready to build intelligent agents, we want you! 🙌
 
-## Features
+## Challenge Overview
 
-- **Room Booking:** Book a hotel room through a conversational interface.
-- **Booking Rescheduling:** Modify existing reservations.
-- **Hotel Q&A:** Answer general questions about the hotel (e.g., amenities, check-in/out times).
-- **Context-Aware Conversations:** Remembers previous parts of the conversation to provide relevant responses.
-- **Instagram Integration:** Interacts with users directly through Instagram DMs.
+Build an AI agent using **LangGraph, LangChain, and the Gemini LLM** that can handle hotel room bookings, reschedule existing reservations, and answer basic hotel-related questions. The agent must be able to interact with users through Instagram DMs, providing a seamless and context-aware conversational experience. This challenge tests your ability to build, deploy, and manage a sophisticated, stateful AI agent.
 
-## Tech Stack
+## Core Functionality
 
-- **LLM Framework:** LangChain & LangGraph
-- **LLM:** Google Gemini
-- **Platform:** Instagram (via Instagram Graph API)
-- **Database:** SQLite / JSON file
+1.  **Create a conversational AI agent that can:**
+    * **Book a hotel room:** Guide the user through the booking process, collecting necessary details (e.g., check-in/check-out dates, room type, number of guests).
+    * **Reschedule a booking:** Allow users to modify their existing reservation dates.
+    * **Answer hotel-related questions:** Respond to basic queries about the hotel (e.g., amenities, check-in times, location).
+    * **Maintain conversation history:** Keep track of the conversation to provide context-aware and relevant responses.
 
-## Architecture & Flow
+2.  **Integrate the agent with Instagram:**
+    * Use the **Instagram Graph API** to send and receive direct messages.
 
-The agent uses LangGraph to define a stateful graph that manages the conversation. Each node in the graph represents a step in the process, such as identifying user intent, calling a tool for booking or Q&A, and generating a response.
+3.  **Manage Data:**
+    * Store reservation data in a lightweight database (e.g., **JSON file or SQLite**).
 
-Below is the LangGraph flow diagram:
+---
 
-```mermaid
-graph TD
-    A[User Message via Instagram DM] --> B{Agent Executor};
-    B --> C{Intent Routing};
-    C -- Booking --> D[Booking Tool];
-    C -- Rescheduling --> E[Rescheduling Tool];
-    C -- Q&A --> F[Q&A Tool];
-    D --> G[Update Reservation DB];
-    E --> G;
-    G --> H{Response Generation};
-    F --> H;
-    H --> I[Send Reply to User];
-```
+## Technical Requirements
 
-## Setup and Installation
+* **Frameworks:** LangGraph, LangChain
+* **LLM:** Gemini
+* **API:** Instagram Graph API
+* **Database:** JSON file or a lightweight database like SQLite.
+* **Error Handling:** Implement robust error handling for API failures and user input issues.
+* **State Management:** The agent must effectively manage conversational state using LangGraph.
 
-Follow these steps to set up and run the project locally.
+> **Note:** For this challenge, you can assume any hotel data or API responses as needed. This means you can create mock data for hotel information, room availability, pricing, etc., without needing to integrate with actual hotel APIs.
 
-### 1. Clone the Repository
+## Evaluation Criteria
 
-```bash
-git clone <repository-url>
-cd <repository-directory>
-```
+* **Functionality:** Does the agent successfully handle booking, rescheduling, and Q&A?
+* **LangGraph Implementation:** Quality and clarity of the state machine graph.
+* **Code Quality:** Organization, readability, and efficiency of your code.
+* **Problem-Solving:** Your creative approach to building the conversational flow.
+* **Documentation:** Clarity of your setup instructions and explanations.
 
-### 2. Create a Virtual Environment and Install Dependencies
+---
 
-```bash
-# Create a virtual environment
-python -m venv venv
+## Submission Guidelines
 
-# Activate the virtual environment
-# On macOS/Linux:
-source venv/bin/activate
-# On Windows:
-# venv\Scripts\activate
+1.  **Fork our challenge repository.**
+2.  **Create a new branch** for your implementation.
+3.  **Include a comprehensive `README.md` with:**
+    * Detailed setup instructions.
+    * An explanation of your agent's architecture.
+    * A justification for your design choices.
+4.  **Provide a LangGraph flow diagram** illustrating the agent's conversational states and transitions.
+5.  **Submit the complete source code** by creating a pull request to our main repository.
 
-# Install the required packages
-pip install -r requirements.txt
-```
+## Getting Started
 
-### 3. Set Up Environment Variables
+To get your API key for the challenge, please send a direct message (DM) to **+91 91796 87775, +91 70248 04485**.
 
-Create a `.env` file in the root of the project by copying the example file:
-
-```bash
-cp .env.example .env
-```
-
-Add your credentials to the `.env` file:
-
-```
-GEMINI_API_KEY="your_gemini_api_key"
-INSTAGRAM_API_ACCESS_TOKEN="your_instagram_access_token"
-DATABASE_URL="sqlite:///reservations.db"
-```
-
-### 4. Get API Keys
-
--   **Gemini API Key**: You can get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
--   **Instagram Graph API Access Token**: To get an API key for the assignment, please send a DM to **[phone_number]**.
-
-### 5. Initialize the Database
-
-If you are using SQLite, run the following command to set up the database schema (assuming a `database.py` with an `init_db` function).
-
-```bash
-python -c "from database import init_db; init_db()"
-```
-
-### 6. Run the Application
-
-```bash
-python main.py
-```
-
-## Deliverables
-
--   **Source Code:** The complete source code is included in this repository.
--   **LangGraph Diagram:** The flow diagram is included in the [Architecture & Flow](#architecture--flow) section of this README.
--   **README:** This file serves as the setup and documentation guide. 
+For any queries, feel free to email us at founders@powersmy.biz ✉️! 
