@@ -2,6 +2,8 @@
 
 We're growing our tech team at Powersmy.biz ([https://powersmy.biz/](https://powersmy.biz/)) and have an exciting paid internship opportunity for students who love solving real-world problems and building impactful products. If you're passionate about conversational AI and ready to build intelligent agents, we want you! 🙌
 
+**Stipend:** Rs. 20,000 (Remote) / Rs. 25,000 (On-Site) - Negotiable
+
 ## Challenge Overview
 
 Build an AI agent using **LangGraph, LangChain, and the Gemini LLM** that can handle hotel room bookings, reschedule existing reservations, and answer basic hotel-related questions. The agent must be able to interact with users through Instagram DMs, providing a seamless and context-aware conversational experience. This challenge tests your ability to build, deploy, and manage a sophisticated, stateful AI agent.
