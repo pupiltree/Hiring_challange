@@ -1,16 +1,15 @@
-# state_machine.py
 
-class StateMachine:
+class StateHandler:
     def __init__(self):
-        self.state = "start"
+        self.state = "idle"
 
-    def transition(self, input_text):
-        if "book" in input_text:
+    def next(self, user_input):
+        if "book" in user_input.lower():
             self.state = "booking"
-        elif "reschedule" in input_text:
+        elif "reschedule" in user_input.lower():
             self.state = "rescheduling"
-        elif "amenities" in input_text:
+        elif "check-in" in user_input.lower() or "amenities" in user_input.lower():
             self.state = "faq"
         else:
-            self.state = "fallback"
+            self.state = "unknown"
         return self.state
