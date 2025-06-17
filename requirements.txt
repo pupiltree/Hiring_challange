@@ -1,0 +1,6 @@
+langchain
+google-generativeai
+
+
+Install via:
+pip install -r requirements.txt
