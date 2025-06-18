@@ -1,12 +1,14 @@
-# AI Agent for Hotel Bookings (LangGraph & Gemini)
+# AI Agent for Hotel Bookings (LangGraph & LLMs)
 
 We're growing our tech team at Powersmy.biz ([https://powersmy.biz/](https://powersmy.biz/)) and have an exciting paid internship opportunity for students who love solving real-world problems and building impactful products. If you're passionate about conversational AI and ready to build intelligent agents, we want you! 🙌
 
 **Stipend:** Rs. 20,000 (Remote) / Rs. 25,000 (On-Site) - Negotiable
 
+**Deadline:** 20th June
+
 ## Challenge Overview
 
-Build an AI agent using **LangGraph, LangChain, and the Gemini LLM** that can handle hotel room bookings, reschedule existing reservations, and answer basic hotel-related questions. The agent must be able to interact with users through Instagram DMs, providing a seamless and context-aware conversational experience. This challenge tests your ability to build, deploy, and manage a sophisticated, stateful AI agent.
+Build an AI agent using **LangGraph, LangChain, and any LLM of your choice (Gemini, Groq, OpenAI, etc.)** that can handle hotel room bookings, reschedule existing reservations, and answer basic hotel-related questions. The agent must be able to interact with users through Instagram DMs, providing a seamless and context-aware conversational experience. This challenge tests your ability to build, deploy, and manage a sophisticated, stateful AI agent.
 
 ## Core Functionality
 
@@ -17,7 +19,7 @@ Build an AI agent using **LangGraph, LangChain, and the Gemini LLM** that can ha
     * **Maintain conversation history:** Keep track of the conversation to provide context-aware and relevant responses.
 
 2.  **Integrate the agent with Instagram:**
-    * Use the **Instagram Graph API** to send and receive direct messages.
+    * Use the **Instagram Graph API** (free to use) to send and receive direct messages.
 
 3.  **Manage Data:**
     * Store reservation data in a lightweight database (e.g., **JSON file or SQLite**).
@@ -27,7 +29,8 @@ Build an AI agent using **LangGraph, LangChain, and the Gemini LLM** that can ha
 ## Technical Requirements
 
 * **Frameworks:** LangGraph, LangChain
-* **LLM:** Gemini
+* **LLM:** Any LLM of your choice (Gemini, Groq, OpenAI, Claude, etc.)
+  * **Note:** If you don't have access to paid LLM APIs, you can use free options like Groq, Gemini Flash models, or other free-tier LLM services
 * **API:** Instagram Graph API
 * **Database:** JSON file or a lightweight database like SQLite.
 * **Error Handling:** Implement robust error handling for API failures and user input issues.
@@ -58,6 +61,12 @@ Build an AI agent using **LangGraph, LangChain, and the Gemini LLM** that can ha
 
 ## Getting Started
 
-To get your API key for the challenge, please send a direct message (DM) to **+91 91796 87775, +91 70248 04485**.
+The Instagram Graph API is free to use for this challenge. You can set up your own developer account and obtain the necessary credentials from the Facebook Developer Portal.
+
+**LLM Options:** If you don't have access to paid LLM APIs, there are several free alternatives available:
+* **Groq** - Fast inference with free tier
+* **Google Gemini Flash** - Free tier available
+* **Hugging Face Inference API** - Free tier for many models
+* **Ollama** - Run open-source models locally
 
 For any queries, feel free to email us at founders@powersmy.biz ✉️! 
