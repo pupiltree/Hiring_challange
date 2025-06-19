@@ -1,0 +1,44 @@
+{
+    "states": [
+      { "name": "greeting",       "transitions":[{"on":"book","to":"collect_dates"}] },
+      {
+        "name": "collect_dates",
+        "slots": ["check_in","check_out"],
+        "prompt": "Sure—what are your check‑in and check‑out dates?",
+        "transitions":[{"on":"dates_collected","to":"collect_room_type"}]
+      },
+      {
+        "name": "collect_room_type",
+        "slots": ["room_type","guests"],
+        "prompt": "Which room type would you like, and for how many guests?",
+        "transitions":[{"on":"info_collected","to":"confirm_booking"}]
+      },
+      {
+        "name": "confirm_booking",
+        "prompt": "Great, a {{room_type}} for {{guests}} from {{check_in}} to {{check_out}}. Confirm?",
+        "transitions":[
+          { "on":"yes","to":"complete_booking" },
+          { "on":"no","to":"collect_dates" }
+        ]
+      },
+      {
+        "name": "complete_booking",
+        "action": "book_room",
+        "prompt": "Your room is booked! Here’s your reservation ID: {{reservation_id}}."
+      },
+      {
+        "name": "reschedule",
+        "slots": ["reservation_id","new_check_in","new_check_out"],
+        "prompt": "Please share your reservation ID and new dates.",
+        "action": "reschedule_room",
+        "prompt_success": "Your reservation {{reservation_id}} has been updated."
+      },
+      {
+        "name": "faq",
+        "prompt": "Ask me anything about our hotel—amenities, location, check‑in times…",
+        "action": "answer_faq"
+      }
+    ],
+    "initial_state": "greeting"
+  }
+  

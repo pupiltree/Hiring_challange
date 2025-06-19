@@ -1,72 +1,184 @@
-# AI Agent for Hotel Bookings (LangGraph & LLMs)
+# Hotel Booking AI Agent
 
-We're growing our tech team at Powersmy.biz ([https://powersmy.biz/](https://powersmy.biz/)) and have an exciting paid internship opportunity for students who love solving real-world problems and building impactful products. If you're passionate about conversational AI and ready to build intelligent agents, we want you! 🙌
+A conversational AI agent built with LangGraph, LangChain, and Gemini through the PaLM API. It manages hotel room bookings, rescheduling, and FAQs via Instagram DMs.
 
-**Stipend:** Rs. 20,000 (Remote) / Rs. 25,000 (On-Site) - Negotiable
+## Project Structure
 
-**Deadline:** 20th June
-
-## Challenge Overview
-
-Build an AI agent using **LangGraph, LangChain, and any LLM of your choice (Gemini, Groq, OpenAI, etc.)** that can handle hotel room bookings, reschedule existing reservations, and answer basic hotel-related questions. The agent must be able to interact with users through Instagram DMs, providing a seamless and context-aware conversational experience. This challenge tests your ability to build, deploy, and manage a sophisticated, stateful AI agent.
-
-## Core Functionality
-
-1.  **Create a conversational AI agent that can:**
-    * **Book a hotel room:** Guide the user through the booking process, collecting necessary details (e.g., check-in/check-out dates, room type, number of guests).
-    * **Reschedule a booking:** Allow users to modify their existing reservation dates.
-    * **Answer hotel-related questions:** Respond to basic queries about the hotel (e.g., amenities, check-in times, location).
-    * **Maintain conversation history:** Keep track of the conversation to provide context-aware and relevant responses.
-
-2.  **Integrate the agent with Instagram:**
-    * Use the **Instagram Graph API** (free to use) to send and receive direct messages.
-
-3.  **Manage Data:**
-    * Store reservation data in a lightweight database (e.g., **JSON file or SQLite**).
+```
+hotel-agent/
+├── langgraph/
+│   └── booking_flow.json        # LangGraph state machine definition
+├── src/
+│   ├── langgraph.py             # LangGraph engine implementation
+│   ├── db.py                    # SQLite storage for bookings and state
+│   ├── instagram_client.py      # Instagram Graph API wrapper
+│   ├── agent.py                 # Agent logic (state and LLM integration)
+│   └── app.py                   # Flask webhook server
+├── .env                         # Environment variables
+├── requirements.txt             # Python dependencies
+└── .gitignore                   # Files to ignore in Git
+```
 
 ---
 
-## Technical Requirements
+## Prerequisites
 
-* **Frameworks:** LangGraph, LangChain
-* **LLM:** Any LLM of your choice (Gemini, Groq, OpenAI, Claude, etc.)
-  * **Note:** If you don't have access to paid LLM APIs, you can use free options like Groq, Gemini Flash models, or other free-tier LLM services
-* **API:** Instagram Graph API
-* **Database:** JSON file or a lightweight database like SQLite.
-* **Error Handling:** Implement robust error handling for API failures and user input issues.
-* **State Management:** The agent must effectively manage conversational state using LangGraph.
+* Python 3.8 or higher installed
+* pip, the Python package manager
+* An Instagram Business account linked to a Facebook App with the **Instagram Graph API** enabled
+* A Google Cloud API key for PaLM/Gemini (set as `GEMINI_API_KEY`)
 
-> **Note:** For this challenge, you can assume any hotel data or API responses as needed. This means you can create mock data for hotel information, room availability, pricing, etc., without needing to integrate with actual hotel APIs.
+Optional:
 
-## Evaluation Criteria
-
-* **Functionality:** Does the agent successfully handle booking, rescheduling, and Q&A?
-* **LangGraph Implementation:** Quality and clarity of the state machine graph.
-* **Code Quality:** Organization, readability, and efficiency of your code.
-* **Problem-Solving:** Your creative approach to building the conversational flow.
-* **Documentation:** Clarity of your setup instructions and explanations.
+* ngrok or localtunnel to expose your local server over HTTPS
 
 ---
 
-## Submission Guidelines
+## Setup
 
-1.  **Fork our challenge repository.**
-2.  **Create a new branch** for your implementation.
-3.  **Include a comprehensive `README.md` with:**
-    * Detailed setup instructions.
-    * An explanation of your agent's architecture.
-    * A justification for your design choices.
-4.  **Provide a LangGraph flow diagram** illustrating the agent's conversational states and transitions.
-5.  **Submit the complete source code** by creating a pull request to our main repository.
+1. **Clone the repository**
 
-## Getting Started
+   ```bash
+   git clone https://github.com/yourusername/hotel-agent.git
+   cd hotel-agent
+   ```
 
-The Instagram Graph API is free to use for this challenge. You can set up your own developer account and obtain the necessary credentials from the Facebook Developer Portal.
+2. **Install dependencies**
 
-**LLM Options:** If you don't have access to paid LLM APIs, there are several free alternatives available:
-* **Groq** - Fast inference with free tier
-* **Google Gemini Flash** - Free tier available
-* **Hugging Face Inference API** - Free tier for many models
-* **Ollama** - Run open-source models locally
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-For any queries, feel free to email us at founders@powersmy.biz ✉️! 
+3. **Configure environment**
+
+   * Create a file named `.env` in the project root with the following:
+
+     ```dotenv
+     # Instagram
+     PAGE_TOKEN=your_instagram_page_token
+     VERIFY_TOKEN=your_chosen_verify_token
+
+     # Gemini / PaLM API
+     GEMINI_API_KEY=your_google_palm_api_key
+     GEMINI_MODEL=gemini-2-alpha-0314
+     ```
+   * Make sure `.env` is in `.gitignore` to protect your secrets.
+
+4. **Verify LangGraph flow**
+
+   * Open `langgraph/booking_flow.json` and check that the states and prompts meet your needs.
+
+---
+
+## Running the Server
+
+Start the Flask application:
+
+```bash
+python src/app.py
+```
+
+By default, the server listens on `http://0.0.0.0:5000`.
+
+---
+
+## Exposing Webhook Endpoint
+
+Instagram needs an HTTPS callback URL. Use one of the following:
+
+### Option A: ngrok
+
+1. [Download ngrok](https://ngrok.com/download) and unzip it.
+2. Run:
+
+   ```bash
+   ngrok http 5000
+   ```
+3. Note the HTTPS forwarding address (e.g., `https://abcd1234.ngrok.io`).
+
+### Option B: localtunnel (Node.js)
+
+```bash
+npm install -g localtunnel
+lt --port 5000
+```
+
+---
+
+## Configuring Instagram Webhook
+
+1. In your Facebook Developer dashboard, go to **Webhooks** and select **Add Subscription**.
+2. Set **Callback URL** to `https://<your-tunnel-host>/webhook`.
+3. Set **Verify Token** to the same `VERIFY_TOKEN` from your `.env`.
+4. Subscribe to the `messages` field under Instagram.
+
+---
+
+## Testing
+
+### 1. Webhook Verification
+
+Simulate the handshake:
+
+```bash
+curl "https://<your-tunnel-host>/webhook?hub.mode=subscribe&hub.verify_token=my_chosen_token&hub.challenge=12345"
+```
+
+You should receive back `12345`.
+
+### 2. Simulate a DM via curl
+
+Create `payload.json`:
+
+```json
+{
+  "entry": [{
+    "messaging": [{
+      "sender": {"id": "TEST_USER"},
+      "message": {"text": "book"}
+    }]
+  }]
+}
+```
+
+Send:
+
+```bash
+curl -X POST https://<your-tunnel-host>/webhook \
+     -H "Content-Type: application/json" \
+     -d @payload.json
+```
+
+Check your console for logs and look for the bot’s reply in your Instagram DM.
+
+### 3. Full Booking Flow
+
+1. **User** → Bot: `book`
+2. **Bot** → User: “Sure, what are your check-in and check-out dates?”
+3. **User** → Bot: `2025-07-01 to 2025-07-05`
+4. **Bot** → User: “Which room type would you like, and for how many guests?”
+5. **User** → Bot: `Deluxe, 2 guests`
+6. **Bot** → User: “Great, a Deluxe for 2 guests from 2025-07-01 to 2025-07-05. Confirm?”
+7. **User** → Bot: `yes`
+8. **Bot** → User: “Your room is booked! Here’s your reservation ID: abc12345.”
+
+Test **reschedule**:
+
+* Send `reschedule`
+* Provide `<reservation_id> 2025-07-02 to 2025-07-06`
+* Confirm update message
+
+Test **FAQ**:
+
+* Send: `What time is check-in?`
+* Bot responds using Gemini LLM.
+
+---
+
+## Troubleshooting
+
+* **ModuleNotFoundError: langchain_community** → `pip install langchain-community`
+* **Deprecation/Init errors for GooglePalm** → wrapped in `try/except` fallback
+* Check your `.env` values and tunnel logs
+
+---
