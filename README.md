@@ -383,26 +383,4 @@ The diagram shows:
 ### Debug Mode
 Enable debug logging by setting `LOG_LEVEL=DEBUG` in your `.env` file.
 
-## 📈 Future Enhancements
-
-1. **Enhanced Intent Detection**: LLM-based intent classification
-2. **Multi-language Support**: Internationalization
-3. **Payment Integration**: Stripe/PayPal integration
-4. **Analytics Dashboard**: Booking analytics and insights
-5. **Email Notifications**: Booking confirmations and reminders
-6. **Room Availability**: Real-time availability checking
-7. **User Authentication**: Secure user management
-
-## 📄 License
-
-This project is created for the Powersmy.biz internship challenge.
-
-## 🤝 Contributing
-
-This is a challenge submission. For questions or issues, contact:
-- Email: founders@powersmy.biz
-- Phone: +91 91796 87775, +91 70248 04485
-
----
-
 **Built with ❤️ using LangGraph, LangChain, and Gemini LLM** 
