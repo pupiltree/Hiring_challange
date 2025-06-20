@@ -1,72 +1,108 @@
-# AI Agent for Hotel Bookings (LangGraph & LLMs)
+# Hotel Booking AI Agent
 
-We're growing our tech team at Powersmy.biz ([https://powersmy.biz/](https://powersmy.biz/)) and have an exciting paid internship opportunity for students who love solving real-world problems and building impactful products. If you're passionate about conversational AI and ready to build intelligent agents, we want you! 🙌
-
-**Stipend:** Rs. 20,000 (Remote) / Rs. 25,000 (On-Site) - Negotiable
-
-**Deadline:** 20th June
-
-## Challenge Overview
-
-Build an AI agent using **LangGraph, LangChain, and any LLM of your choice (Gemini, Groq, OpenAI, etc.)** that can handle hotel room bookings, reschedule existing reservations, and answer basic hotel-related questions. The agent must be able to interact with users through Instagram DMs, providing a seamless and context-aware conversational experience. This challenge tests your ability to build, deploy, and manage a sophisticated, stateful AI agent.
-
-## Core Functionality
-
-1.  **Create a conversational AI agent that can:**
-    * **Book a hotel room:** Guide the user through the booking process, collecting necessary details (e.g., check-in/check-out dates, room type, number of guests).
-    * **Reschedule a booking:** Allow users to modify their existing reservation dates.
-    * **Answer hotel-related questions:** Respond to basic queries about the hotel (e.g., amenities, check-in times, location).
-    * **Maintain conversation history:** Keep track of the conversation to provide context-aware and relevant responses.
-
-2.  **Integrate the agent with Instagram:**
-    * Use the **Instagram Graph API** (free to use) to send and receive direct messages.
-
-3.  **Manage Data:**
-    * Store reservation data in a lightweight database (e.g., **JSON file or SQLite**).
+## Overview
+This project implements a conversational AI agent for hotel bookings, rescheduling, and hotel-related Q&A using LangGraph, LangChain, and Groq LLM. The agent interacts with users via Instagram DMs, maintains conversation state, and stores booking data in a lightweight JSON database.
 
 ---
 
-## Technical Requirements
-
-* **Frameworks:** LangGraph, LangChain
-* **LLM:** Any LLM of your choice (Gemini, Groq, OpenAI, Claude, etc.)
-  * **Note:** If you don't have access to paid LLM APIs, you can use free options like Groq, Gemini Flash models, or other free-tier LLM services
-* **API:** Instagram Graph API
-* **Database:** JSON file or a lightweight database like SQLite.
-* **Error Handling:** Implement robust error handling for API failures and user input issues.
-* **State Management:** The agent must effectively manage conversational state using LangGraph.
-
-> **Note:** For this challenge, you can assume any hotel data or API responses as needed. This means you can create mock data for hotel information, room availability, pricing, etc., without needing to integrate with actual hotel APIs.
-
-## Evaluation Criteria
-
-* **Functionality:** Does the agent successfully handle booking, rescheduling, and Q&A?
-* **LangGraph Implementation:** Quality and clarity of the state machine graph.
-* **Code Quality:** Organization, readability, and efficiency of your code.
-* **Problem-Solving:** Your creative approach to building the conversational flow.
-* **Documentation:** Clarity of your setup instructions and explanations.
+## Features
+- **Book a hotel room:** Guides users through booking, collecting check-in/out dates, room type, and number of guests.
+- **Reschedule a booking:** Allows users to modify existing reservation dates.
+- **Answer hotel-related questions:** Responds to queries about amenities, check-in times, location, etc.
+- **Maintain conversation history:** Uses LangGraph to provide context-aware, stateful conversations.
+- **Instagram integration:** Receives and sends DMs via the Instagram Graph API.
+- **Data management:** Stores reservations in a JSON file for simplicity.
 
 ---
 
-## Submission Guidelines
+## Setup Instructions
 
-1.  **Fork our challenge repository.**
-2.  **Create a new branch** for your implementation.
-3.  **Include a comprehensive `README.md` with:**
-    * Detailed setup instructions.
-    * An explanation of your agent's architecture.
-    * A justification for your design choices.
-4.  **Provide a LangGraph flow diagram** illustrating the agent's conversational states and transitions.
-5.  **Submit the complete source code** by creating a pull request to our main repository.
+### 1. Clone the Repository
+```
+git clone <your-forked-repo-url>
+cd <repo-directory>
+```
 
-## Getting Started
+### 2. Create and Activate a Virtual Environment (Recommended)
+```
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+```
 
-The Instagram Graph API is free to use for this challenge. You can set up your own developer account and obtain the necessary credentials from the Facebook Developer Portal.
+### 3. Install Dependencies
+```
+pip install -r requirements.txt
+```
 
-**LLM Options:** If you don't have access to paid LLM APIs, there are several free alternatives available:
-* **Groq** - Fast inference with free tier
-* **Google Gemini Flash** - Free tier available
-* **Hugging Face Inference API** - Free tier for many models
-* **Ollama** - Run open-source models locally
+### 4. Configure Environment Variables
+- Copy `.env.example` to `.env` and fill in your credentials:
+```
+INSTAGRAM_API_TOKEN="your_instagram_api_token"
+GROQ_API_KEY="your_groq_api_key"
+FACEBOOK_PAGE_ID="your_facebook_page_id"
+WEBHOOK_VERIFY_TOKEN="your_webhook_verify_token"
+APP_SECRET="your_app_secret"
+```
 
-For any queries, feel free to email us at founders@powersmy.biz ✉️! 
+### 5. Run the FastAPI App
+```
+python -m app.main
+```
+
+### 6. Expose Localhost with ngrok
+```
+ngrok http 8000
+```
+- Copy the HTTPS URL for webhook setup.
+
+### 7. Set Up Instagram Webhook
+- In the Facebook Developer Portal, add your ngrok URL + `/webhook` as the callback URL.
+- Use your `WEBHOOK_VERIFY_TOKEN`.
+- Subscribe to `messages` and `messaging_postbacks` fields.
+
+### 8. Link Instagram Account
+- Convert your Instagram account to Professional.
+- Link it to your Facebook Page.
+- Add your Instagram username as a tester in the Facebook Developer Portal and accept the invite.
+
+---
+
+## Architecture & Design Choices
+- **LangGraph State Machine:** Manages conversation flow, tool invocation, and stateful context.
+- **Groq LLM:** Chosen for its free tier and fast, reliable responses.
+- **FastAPI:** Provides a robust, async web server for webhook handling.
+- **JSON Database:** Lightweight, easy to use for prototyping and small-scale deployments.
+- **Instagram Graph API:** Enables real-time DM interaction with users.
+
+---
+
+## LangGraph Flow Diagram
+
+```mermaid
+graph TD
+    Start("Start") --> LLM("LLM Node")
+    LLM -->|"Tool Call Needed"| Tools("Tool Node")
+    Tools --> LLM
+    LLM -->|"No Tool Call"| End("End")
+```
+
+---
+
+## Known Issues / Limitations
+- New Instagram accounts may take time to be recognized as testers by Meta.
+- Only basic hotel data is mocked; no real hotel API integration.
+- For production, consider using a persistent database and secure secret management.
+
+---
+
+## How to Test
+- Send a DM to your linked Instagram account from another account.
+- Watch your FastAPI and ngrok logs for incoming requests and responses.
+
+---
+
+## Contact
+For questions or issues, please open an issue or contact the project maintainer. 
