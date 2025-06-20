@@ -382,3 +382,12 @@ The diagram shows:
 
 
 **Built with ❤️ using LangGraph, LangChain, and Gemini LLM** 
+
+
+---
+
+## Contact Details
+
+- **Name:** Vishal Keshari
+- **Email:** vishalkeshari2004@gmail.com
+- **Phone:** 8173054118
