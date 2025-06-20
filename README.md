@@ -380,7 +380,5 @@ The diagram shows:
    - Check file permissions
    - Verify database path
 
-### Debug Mode
-Enable debug logging by setting `LOG_LEVEL=DEBUG` in your `.env` file.
 
 **Built with ❤️ using LangGraph, LangChain, and Gemini LLM** 
